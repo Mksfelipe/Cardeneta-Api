@@ -4,8 +4,6 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
 
-import javax.validation.constraints.NotNull;
-
 import lombok.Getter;
 import lombok.Setter;
 
@@ -13,7 +11,6 @@ import lombok.Setter;
 @Setter
 public class ClienteDto {
 
-	@NotNull
 	private String nome;
 	private String sobreNome;
 	private LocalDate dataNascimento;
