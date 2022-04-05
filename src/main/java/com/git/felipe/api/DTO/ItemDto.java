@@ -1,5 +1,6 @@
 package com.git.felipe.api.DTO;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
@@ -12,12 +13,13 @@ import lombok.Setter;
 @Getter
 @Setter
 @JsonInclude(Include.NON_NULL)
-public class ItemDto {
+public class ItemDto implements Serializable {
 
+	private static final long serialVersionUID = 1L;
 	private Long id;
-	
+
 	private BigDecimal valor;
 	private LocalDateTime dataItem;
 	private LocalDateTime dataItemAtualizado;
-	
+
 }

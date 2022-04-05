@@ -4,6 +4,8 @@ import java.util.List;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import com.git.felipe.domain.exception.ItemNaoEncontradoException;
@@ -18,10 +20,13 @@ public class ItemService {
 	@Autowired
 	private ItemRepository itemRepository;
 
+
+	@Cacheable("itens")
 	public List<Item> listarPorClienteId(Long clienteId) {
 		return itemRepository.findBycliente_id(clienteId);
 	}
 
+	@Cacheable(cacheNames = "clientes", key = "#itemId")
 	public Item buscar(Long itemId) {
 		return buscarOuFalhar(itemId);
 	}
@@ -33,6 +38,7 @@ public class ItemService {
 		return item;
 	}
 
+	@CacheEvict(value = "clientes", allEntries = true)
 	public Item salvar(Item item) {
 		return itemRepository.save(item);
 	}

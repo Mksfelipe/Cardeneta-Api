@@ -1,7 +1,6 @@
 package com.git.felipe.api.controller;
 
 import java.math.BigDecimal;
-
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -69,7 +68,7 @@ public class ClienteController {
 		Cliente cliente = clienteService.buscar(clienteId);
 		item.setCliente(cliente);
 
-		return converterParaDto(itemService.salvar(item));
+		return converterItemParaDto(itemService.salvar(item));
 	}
 
 	@PostMapping
@@ -87,9 +86,9 @@ public class ClienteController {
 	@PutMapping("/{clienteId}/itens/{itemId}")
 	public ItemDto atualizar(@PathVariable Long clienteId, @PathVariable Long itemId, @RequestBody @Valid Item item) {
 		clienteService.atualizarItem(clienteId, itemId, item);
-		return converterParaDto(item);
+		return converterItemParaDto(item);
 	}
-	
+
 	@DeleteMapping("/{clienteId}/itens/{itemId}")
 	@ResponseStatus(code = HttpStatus.NO_CONTENT)
 	public void deletar(@PathVariable Long clienteId, @PathVariable Long itemId) {
@@ -107,7 +106,7 @@ public class ClienteController {
 		return clienteDto;
 	}
 
-	private ItemDto converterParaDto(Item item) {
+	private ItemDto converterItemParaDto(Item item) {
 		ItemDto itemDto = modelMapper.map(item, ItemDto.class);
 		return itemDto;
 	}
