@@ -33,7 +33,7 @@ public class ItemService {
 
 	public Item atualizar(Long itemId, Item item) {
 		Item itemAtual = buscarOuFalhar(itemId);
-		BeanUtils.copyProperties(item, itemAtual, "id", "dataItem", "dataItemAtualizado");
+		BeanUtils.copyProperties(item, itemAtual, "id");
 		itemRepository.save(itemAtual);
 		return item;
 	}

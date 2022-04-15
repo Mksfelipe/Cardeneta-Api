@@ -1,4 +1,4 @@
-package com.git.felipe.api.DTO;
+package com.git.felipe.api.model;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
@@ -13,7 +13,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @JsonInclude(Include.NON_NULL)
-public class ItemDto implements Serializable {
+public class ItemModel implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	private Long id;

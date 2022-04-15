@@ -5,15 +5,12 @@ import java.time.LocalDate;
 import java.util.List;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Past;
-import javax.validation.constraints.Size;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -32,16 +29,13 @@ public class Cliente implements Serializable {
 	@EqualsAndHashCode.Include
 	private Long id;
 	
-	@NotBlank
-	@Size(max = 20)
 	private String nome;
 	
-	@NotBlank
-	@Size(max = 20)
-	private String sobreNome;
+	@Column(unique = true)
+	private String cpf;
+    
+	private String password;
 	
-	@Past
-	@NotNull
 	private LocalDate dataNascimento;
 
 	@JsonIgnore

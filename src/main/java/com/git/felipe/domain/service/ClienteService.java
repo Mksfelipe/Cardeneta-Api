@@ -29,7 +29,7 @@ public class ClienteService {
 
 	@Autowired
 	private ItemService itemService;
-
+	
 	@Cacheable("clientes")
 	public List<Cliente> listar() {
 		return clienteRepository.findAll();
@@ -44,13 +44,18 @@ public class ClienteService {
 	public Cliente buscar(final Long clienteId) {
 		return buscarOuFalhar(clienteId);
 	}
+
+	@Cacheable("clientes")
+	public List<Cliente> buscarPorNome(String nome) {
+		return clienteRepository.findByNomeContaining(nome);
+	}
 	
 	@CacheEvict(value = "clientes", allEntries = true)
 	public Cliente atualizar(Long clienteId, Cliente cliente) {
 		Cliente clienteAtual = buscarOuFalhar(clienteId);
-		BeanUtils.copyProperties(cliente, clienteAtual, "id");
-		
-		return clienteRepository.save(clienteAtual);
+
+		BeanUtils.copyProperties(cliente, clienteAtual, "id", "itens");
+		return salvar(clienteAtual);
 	}
 
 	@CacheEvict(value = "clientes", allEntries = true) 
@@ -81,7 +86,7 @@ public class ClienteService {
 		itemService.atualizar(itemId, item);
 		return item;
 	}
-
+	
 	@CacheEvict(value = "clientes", allEntries = true)
 	public void deletarItem(Long clienteId, Long itemId) {
 		buscarOuFalhar(clienteId);
@@ -96,9 +101,12 @@ public class ClienteService {
 	}
 
 
+	
 	private Cliente buscarOuFalhar(Long clienteId) {
 		return clienteRepository.findById(clienteId).orElseThrow(
 				() -> new ClienteNaoEncontradoException(String.format(MSG_CLIENTE_NAO_ENCONTRADO, clienteId)));
 	}
+	
+	
 	
 }
